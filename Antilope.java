@@ -19,10 +19,12 @@ public class Antilope extends Animal {
     Herbe herbe;
     EcoSysteme ecosystem;
     Savane savane;
+    Antilope antilope = new Antilope(facteurCroissanceAntilopes);
     Antilope(double facteurCroissanceAntilopes ){
         super();
         this.facteurCroissanceAntilopes = facteurCroissanceAntilopes;
         setProie(true);
+        
 
     }
     
@@ -44,6 +46,14 @@ public class Antilope extends Animal {
         double nouvelleMasseHerbe = herbe.getMasse() - (2 * ecosystem.masseProies()) ;
         herbe.setMasse(nouvelleMasseHerbe);
 
+    }
+    @Override
+    public void vieillir() {
+       int age = antilope.getAge();
+        age++;
+        antilope.setAge(age);
+        double masse = antilope.getMasse() * this.facteurCroissanceAntilopes;
+        antilope.setMasse(masse);
     }
 
 
