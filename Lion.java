@@ -21,8 +21,9 @@ public class Lion extends Animal {
         this.facteurCroissanceLions = facteurCroissanceLions;
         setProie(false);
     }
-    EcoSysteme ecosystem;
-    Antilope antilopes;
+    Population population;
+    Antilope antilope;
+    Lion lion = new Lion(facteurCroissanceLions);
 
     @Override
     public int getAgeMax() {
@@ -37,10 +38,18 @@ public class Lion extends Animal {
         return new Lion(facteurCroissanceLions);
     }
     public void manger() {// Un Lion mange des antilopes equivalent a deux fois sa masse
-       // calcul la masse de chaque predateur et multiplie par deux pour doubler
-        double doubleMasseParPredateur = (ecosystem.massePredateurs()/ ecosystem.getNombrePredateurs()) *2;
-        double nouvelleMasseDesAntilopes = ecosystem.masseProies() - doubleMasseParPredateur ;
-        antilopes.setMasse(nouvelleMasseDesAntilopes);
+       // calcul du double de la masse du lion 
+        double doubleMassePredateur = lion.getMasse() *2;
+        //masse totale antilope - le double de la masse du lion = nouvelle masse des antilopes
+        double nouvelleMasseAntilopes = population.masseProies() - doubleMassePredateur ;
+        antilope.setMasse(nouvelleMasseAntilopes);
+    }
+    @Override
+    public void vieillir() {
+       int age = lion.getAge();
+        age++;
+        lion.setAge(age);
+        double masse = lion.getMasse() * this.facteurCroissanceLions;
+        lion.setMasse(masse);
     }
 }
-
