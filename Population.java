@@ -22,7 +22,7 @@ import java.util.Random;
 
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
-    private ArrayList<Animal> individus = new ArrayList<>();
+    private ArrayList<Animal> individus = new ArrayList<>(); // concatener proies et predateurs dans individus
 
     ArrayList<Animal> proies;
     ArrayList<Animal> predateurs;
