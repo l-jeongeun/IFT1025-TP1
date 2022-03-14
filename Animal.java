@@ -22,7 +22,7 @@ public class Animal implements ProiePredateur{
     public Animal(){
     }
     
-    private int age = 0;
+    private int age;
     private int nombreDanimaux = 0;//*************************
     // current mass
     private double masse ;
@@ -32,6 +32,7 @@ public class Animal implements ProiePredateur{
     //age auquel un animal devient mature
     private int ageMature;
     private boolean proie;
+    private boolean predateur;
     Animal animale = new Animal();
 
     // animal becomes alive
@@ -52,7 +53,6 @@ public class Animal implements ProiePredateur{
 
     // animal eats
     public void manger(){
-        //augmenter la masse
           // A completer          
     
         
@@ -61,26 +61,23 @@ public class Animal implements ProiePredateur{
      // animal delivers
     public Animal accoucher(){
         
-        return animale;//new Animal(); 
+        return new Animal(); 
 
     }
     // animal dies
     public void mourir(){
         nombreDanimaux--;
-    // A completer
+        //!animale.estVivant();
 
     }
     // animal is alive
     public boolean estVivant(){
-        if (getAge() < getAgeMax()){
-          return true;
-        }
-        return false;
+        return true;
     }
 
     // animal is mature   
     public boolean estMature(){
-        if (getAge() == getAgeMature()){
+        if (animale.getAge() == animale.getAgeMature()){
             return true;
         }
         return false;
@@ -100,6 +97,20 @@ public class Animal implements ProiePredateur{
        }
         return false;
     }
+    // set animal mode to predator
+    public void setPredateur( boolean predateur ){
+        this.predateur = predateur;
+
+    }
+    // animal is a predator
+    public boolean estPredateur(){
+        if(this.predateur){
+            return true;
+        }
+        return false;
+     
+    }
+
      // get animal's mass
     public double getMasse(){
          return masse; 
