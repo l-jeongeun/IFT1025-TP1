@@ -20,6 +20,7 @@ public class Lion extends Animal {
         super();
         this.facteurCroissanceLions = facteurCroissanceLions;
         setProie(false);
+        setPredateur(true);
     }
     Population population;
     Antilope antilope;
@@ -29,13 +30,18 @@ public class Lion extends Animal {
     public int getAgeMax() {
         return 50;
     }
+    public int AGEMAX = getAgeMax();
+    
+
     @Override
     public int getAgeMature() {
         return 5;
     }
     @Override
     public Animal accoucher() {
-        return new Lion(facteurCroissanceLions);
+        lion.naitre();
+        return lion;
+
     }
     public void manger() {// Un Lion mange des antilopes equivalent a deux fois sa masse
        // calcul du double de la masse du lion 
