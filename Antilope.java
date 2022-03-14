@@ -24,8 +24,7 @@ public class Antilope extends Animal {
         super();
         this.facteurCroissanceAntilopes = facteurCroissanceAntilopes;
         setProie(true);
-        
-
+        setPredateur(false);       
     }
     
     @Override
@@ -39,7 +38,8 @@ public class Antilope extends Animal {
     
     @Override
     public Animal accoucher() {
-        return new Antilope(facteurCroissanceAntilopes);
+        antilope.naitre();
+        return antilope;
     }
     @Override
     public void manger() {
@@ -55,6 +55,6 @@ public class Antilope extends Animal {
         double masse = antilope.getMasse() * this.facteurCroissanceAntilopes;
         antilope.setMasse(masse);
     }
-
+    
 
 }
