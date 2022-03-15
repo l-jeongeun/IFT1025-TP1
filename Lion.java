@@ -43,13 +43,7 @@ public class Lion extends Animal {
         return lion;
 
     }
-    public void manger() {// Un Lion mange des antilopes equivalent a deux fois sa masse
-       // calcul du double de la masse du lion 
-        double doubleMassePredateur = lion.getMasse() *2;
-        //masse totale antilope - le double de la masse du lion = nouvelle masse des antilopes
-        double nouvelleMasseAntilopes = population.masseProies() - doubleMassePredateur ;
-        antilope.setMasse(nouvelleMasseAntilopes);
-    }
+
     @Override
     public void vieillir() {
        int age = lion.getAge();
