@@ -23,7 +23,6 @@ import java.util.Random;
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
     private ArrayList<Animal> individus = new ArrayList<>(); // contatener proies et predateurs
-    Iterator<Animal> iterator = individus.iterator();
     ArrayList<Animal> proies;
     ArrayList<Animal> predateurs;
     int nombreAntilopesMatures = 0;
@@ -31,6 +30,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     Antilope antilope;
     Lion lion;
     Herbe herbe;
+    ArrayList<Animal> animaux = this.individus;//.clone();
    
 
     public Population( Herbe herbe, ArrayList<Animal> proies, ArrayList<Animal> predateurs ) {
@@ -113,6 +113,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         //les animaux vieillissent en ajoutant un an a leur age et s'ils ont atteint l'age max, ils meurt
         for( Animal a : this.individus ) {
             a.vieillir();
+            //si l'animal atteint l'age max il meurt
             if (a.getAge() > a.getAgeMax()){
                 a.mourir();
             }               
@@ -121,7 +122,48 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     // chasing
     public void chasser(){
+        melanger();
+        int nombreDeProiesChassees = 0;
+        for( Animal a : this.animaux ) {
+            //si c'est un predateur on fait manger le predateur
+            if( a.estPredateur()){
+                //iterer a travers la list
+                double totalMasseAntilopeMangee = 0;
+                double doubleMassePredateur = a.getMasse() *2;
+                int i = 0 ;
+                
+                while((totalMasseAntilopeMangee<doubleMassePredateur) & (i <this.animaux.size()) & (nombreDeProiesChassees < getNombreProiesChassables())){
+                    //iterer a travers la list tant q on a pas atteint la masse de nourriture demandee
+                    if (animaux.get(i).estProie()){
+                        totalMasseAntilopeMangee += animaux.get(i).getMasse();
+                        nombreDeProiesChassees++;
+                        animaux.remove(i);
+                        animaux.get(i).mourir();
+                        i++;
+                    }
+                    i++;
+                }
+                //si le lion n'a pas mangE la masse suffisante elle meurt
+                if (totalMasseAntilopeMangee<doubleMassePredateur){
+                    a.mourir();
+                    animaux.remove(a);
+                }
+              
+            }
 
+            else{
+                // sinon on fait manger l'antilope
+                //une antilope doit manger 2 fois sa masse d’herbe 
+                double nouvelleMasseHerbe = herbe.getMasse() - (2 * a.getMasse()) ;
+                this.herbe.setMasse(nouvelleMasseHerbe);
+                //ou manger
+                //A completer
+                // s'il ya pas assez d'herbe l'antilope meurt
+                //if(this.herbe.getMasse()<this.herbe.masseAnnuelle){
+
+                }
+                           
+        }
       
         
 
