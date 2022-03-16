@@ -18,38 +18,35 @@
     
 
 public class Animal implements ProiePredateur{
-    private double facteurCroissanceAnimal ;
+    private double facteurCroissance ;
     public Animal(){
+
     }
     
     private int age;
-    private int nombreDanimaux = 0;//*************************
     // current mass
-    private double masse ;
-    ;
-    //obtenir l'age max de l'animal
-    private int ageMax ;
+    private double masse =10.0 ;
     //age auquel un animal devient mature
     private int ageMature;
     private boolean proie;
     private boolean predateur;
-    Animal animale = new Animal();
+    private boolean vivant = true;
+    //Animal animale = new Animal();
 
+    public void setFacteur(double facteur){
+        this.facteurCroissance = facteur;
+    }
+    public double getFacteur(){
+        return this.facteurCroissance;
+    }
     // animal becomes alive
     public void naitre(){
         
-        animale.setAge(0);
-        animale.estVivant(); 
-        nombreDanimaux++;
-       
+        //animale.setAge(0);
+        //animale.estVivant();        
              
     } 
-    // animal is getting one year older
-    public void vieillir(){
-        this.age += 1;
-        this.masse = getMasse() * facteurCroissanceAnimal;
-        
-    }
+    
 
     // animal eats
     public void manger(){
@@ -66,20 +63,19 @@ public class Animal implements ProiePredateur{
     }
     // animal dies
     public void mourir(){
-        nombreDanimaux--;
-        //!animale.estVivant();
+        this.vivant = false;
 
     }
     // animal is alive
     public boolean estVivant(){
-        return true;
+        return this.vivant;
     }
 
     // animal is mature   
     public boolean estMature(){
-        if (animale.getAge() == animale.getAgeMature()){
+        if (this.getAge() >= this.getAgeMature()){
             return true;
-        }
+        }      
         return false;
         
     }
@@ -113,7 +109,7 @@ public class Animal implements ProiePredateur{
 
      // get animal's mass
     public double getMasse(){
-         return masse; 
+         return this.masse; 
         
     }
     // set animal's mass
@@ -132,7 +128,7 @@ public class Animal implements ProiePredateur{
     }
     // get animal's maximum age
     public int getAgeMax(){
-        return this.ageMax;
+        return 0;
         
     }
     // get animal's mature age
@@ -140,4 +136,13 @@ public class Animal implements ProiePredateur{
         return this.ageMature;
         
     }
+    // animal is getting one year older
+    public void vieillir() {
+         this.age++;
+         this.setMasse(this.getMasse() * getFacteur());
+         
+         if (this.getAge() > this.getAgeMax()){
+             this.vivant = false;
+         } 
+     }
 }
