@@ -99,6 +99,9 @@ public class Savane implements TP1Stats {
         }
 	return stats( annee, true ); // return the stats of the last year and print
     }
+	public Population getSavane(){
+		return this.savane;
+	}
     
     public static void print( String text ) { System.out.println( text ); }
     
@@ -124,7 +127,7 @@ public class Savane implements TP1Stats {
 		masseTotaleLions += a.getMasse();
 		if( a.getAge() == Lion.AGEMAX ) nombreVieuxLions++;
 		if( a.estMature() ) nombreLionsMatures++;
-		if( !a.estMature() && a.getAge() != 0 ) nombreJeunesLions++;
+		if(!a.estMature()  && a.getAge() != 0 ) nombreJeunesLions++;
 		if( a.getAge() == 0 ) nombreBebesLions++;
 	    }
 	    else if( a.estProie() ) {
