@@ -11,6 +11,7 @@ public class TestSecondaire {
         */
         System.out.println("////////////////////////////////////////////////////////////////////////////////////////////////////");
         System.out.println("Fichier Animal/Lion/Antilope sauf manger() et accoucher(). Il n'y aura pas de test caché pour cette partie. \n");
+
         int totalTest=0;
         int nT=0;
         //0.0
@@ -18,6 +19,8 @@ public class TestSecondaire {
         Animal test = new Lion(1.1);
         test.vieillir();
         if((test.getAge()!=1 || test.getMasse() != 11 || !test.estVivant())){
+            print(test.getAge());
+            print(test.getMasse());
             System.out.println("Échec du test 0.0 : L:Animal.vieillir() 1 ans");
             nT++;
         }
@@ -36,6 +39,10 @@ public class TestSecondaire {
         //0.2
         test.vieillir();
         if(test.getAge()!=51 || test.getMasse() == (Math.pow(1.1,(test.getAge()))*10) || test.estVivant()){
+            print(test.getAge());
+            print(test.getMasse());
+
+
             System.out.println("Échec du test 0.2 : L:Animal.vieillir() too Old");
             nT++;
         }
@@ -93,6 +100,7 @@ public class TestSecondaire {
         test.vieillir();
         
         if(t1 || !test.estMature()){
+
             System.out.println("Échec du test 0.7 : estMature");
             nT++;
         }
@@ -119,6 +127,7 @@ public class TestSecondaire {
     
     if(!t1 || !t2 || pop.getIndividus().get(0).getAge() !=1 || pop.getIndividus().get(0).getMasse() != 11){
         print("Problème avec la fonction Population.vieillir");
+        
         nT++;
     }
     totalTest++;
@@ -136,6 +145,8 @@ public class TestSecondaire {
     if(pop.getNombrePredateurs()!=12 || pop.getNombreProies()!=1125){
         print("Problème avec la fonction Population.reproduire");
         nT++;
+        print(pop.getNombrePredateurs()+"predateurs");
+        print(pop.getNombreProies());
     }
     totalTest++;
     //chasser    
