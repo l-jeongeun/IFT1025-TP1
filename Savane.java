@@ -10,6 +10,7 @@
 
 /**
    class Savane
+    implements TP1Stats
 
    @author <A HREF="mailto:francois.major@umontreal.ca">François Major</A>
    @version $Revision: 1.0 $ $Date: 2022/03/03 $
@@ -24,14 +25,13 @@
      composed of: herb and animals (lions and Antelopes),
      which implements a prey/predator relationship.
 
-     This class implements TP1Stats.
      This class requires the following Object organization:
 
-     interface ProiePredateur    interface TP1Stats
-          .                       .
-           .      implements     .
-            .                   .
-          Animal   Herbe   Savane
+     ProiePredateur            TP1Stats      EcoSysteme
+          .                       .             .
+           .      implements     .             .
+            .                   .             .
+          Animal   Herbe   Savane            .
           /   \              | made of a Population composed of:
          /     \             ------------------- Herbe,
      Antilope  Lion                              herd of antelopes (preys),
@@ -39,13 +39,8 @@
 */
 
 import java.util.ArrayList;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;
-import java.io.FileReader; 
-public class SavaneTest implements TP1Stats {
+
+public class Savane implements TP1Stats {
 
     private boolean show; // for output/debugging
     private int nombreAnnees; // number of year cycles
@@ -58,7 +53,7 @@ public class SavaneTest implements TP1Stats {
     //            initial herb mass and herb maximum mass
     //            growth factors of the herb and animals
     //            output/debugging option to show more or less details
-    public SavaneTest( int nombreLions,
+    public Savane( int nombreLions,
 		   double facteurCroissanceLions,
 		   int nombreAntilopes,
 		   double facteurCroissanceAntilopes,
@@ -88,67 +83,30 @@ public class SavaneTest implements TP1Stats {
     }
 
     // the cycle of life simulation for the number of years
-	
     public double[] simule() {
 	// the order of event is important
-	int annee=0;
-
-	try {
-		File myObj = new File("savaneTest1.txt");
-		Scanner myReader = new Scanner(myObj);
-		
 	
-	
-	 
-	herbe.vieillir(); // herb grows first year without any animal
-	savane.vieillir(); savane.vieillir(); // animal babies grow protected for the first two years
+	savane.vieillir(); savane.vieillir(); // the savane grows protected for the first two years
 
 	// cycles start
-	
+	int annee;
         for( annee = 0; annee < nombreAnnees; annee++ ) {
 	    savane.vieillir();   // ----- LA SAVANE VIEILLIT -----
 	    savane.chasser();    // ----- LA SAVANE CHASSE -----
 	    savane.reproduire(); // ----- LA SAVANE PROCRÉE -----
 	    // debugging-output
-            if( show && ( annee + 1 ) < this.nombreAnnees ) {
-				if(lecture(myReader,stats( annee, show ))){
-					double[]answer = {annee*1.0};
-					return answer;
-				}
-			};
+            if( show && ( annee + 1 ) < this.nombreAnnees ) stats( annee + 1, show );
         }
-	
-	myReader.close();
-	} catch (FileNotFoundException e) {
-	System.out.println("An error occurred.");
-	e.printStackTrace();
-  	}
-	
-  	
-	  
 	return stats( annee, true ); // return the stats of the last year and print
-
-
     }
-
+	public Population getSavane(){
+		return this.savane;
+	}
     
     public static void print( String text ) { System.out.println( text ); }
-    public boolean lecture(Scanner myReader,double[] test){
-			String data = myReader.nextLine();
-			String[] A = data.split(" ");
-			Boolean bad = false;
-			String[] message = {"L'annee d'evaluation : ","Le nombre de Lions total : ","Le nombre de Lions qui vont mourrir de vieillesse : ","Le nombre de lions matures : ", "Le nombre de lions juveniles : ","Le nombre de bebes lions : ", "La masse totale de lions : ","Le nombre de Antilope total : ","Le nombre de Antilope qui vont mourrir de vieillesse : ","Le nombre de Antilope matures : ", "Le nombre de Antilope juveniles : ","Le nombre de bebes Antilope : ", "La masse totale de Antilope : " };
-		  	for(int i = 0; i<test.length;i++){
-				if(test[i] != Double.parseDouble(A[i])){
-					bad = true;
-					System.out.println(message[i] + A[i] + " n'est pas egale a la valuer attendue de : " + test[i]);
-					break;
-				}
-			}
-			return bad;
-	}
+    
     public double[] stats( int annee, boolean show ) {
-	show=false;
+
 	// to satisfy the TP1Stats interface
 	int nombreLions = 0;
 	int nombreVieuxLions = 0;
@@ -161,7 +119,7 @@ public class SavaneTest implements TP1Stats {
 	int nombreAntilopesMatures = 0;
 	int nombreJeunesAntilopes = 0;
 	int nombreBebesAntilopes = 0;
-	double masseTotaleAntilopes = 0;
+	double masseTotaleAntilopes = 0; 
 
 	for( Animal a : this.savane ) {
 	    if( a.estPredateur() ) {
@@ -169,7 +127,7 @@ public class SavaneTest implements TP1Stats {
 		masseTotaleLions += a.getMasse();
 		if( a.getAge() == Lion.AGEMAX ) nombreVieuxLions++;
 		if( a.estMature() ) nombreLionsMatures++;
-		if( !a.estMature() && a.getAge() != 0 ) nombreJeunesLions++;
+		if(!a.estMature()  && a.getAge() != 0 ) nombreJeunesLions++;
 		if( a.getAge() == 0 ) nombreBebesLions++;
 	    }
 	    else if( a.estProie() ) {
@@ -215,7 +173,6 @@ public class SavaneTest implements TP1Stats {
 	    nombreJeunesAntilopes,
 	    nombreBebesAntilopes,
 	    masseTotaleAntilopes };
-		
         return test;
     }
 }
