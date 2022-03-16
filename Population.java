@@ -22,15 +22,15 @@ import java.util.Random;
 
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
-    private ArrayList<Animal> individus = new ArrayList<>(); // contatener proies et predateurs
+    private ArrayList<Animal> individus = new ArrayList<>(); // concatener proies et predateurs
     ArrayList<Animal> proies;
     ArrayList<Animal> predateurs;
     int nombreAntilopesMatures = 0;
     int nombreLionsMatures = 0 ;
-    Antilope antilope;
-    Lion lion;
     Herbe herbe;
-    ArrayList<Animal> animaux = this.individus;//.clone();
+    
+
+    
    
 
     public Population( Herbe herbe, ArrayList<Animal> proies, ArrayList<Animal> predateurs ) {
@@ -38,13 +38,20 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 	this.proies = proies;
     this.predateurs = predateurs;
     this.herbe = herbe;
-	
+
+    for(int i = 0; i<(this.proies.size()); i++){
+        this.individus.add(this.proies.get(i));
+    }
+    for(int i = 0; i<(this.predateurs.size()); i++){
+        this.individus.add(this.predateurs.get(i));
+    }
+    
     }
     
     public Iterator<Animal> iterator(){
         return this.individus.iterator();
     }
-
+    
     // number of current preys
     public int getNombreProies(){
         return this.proies.size();
@@ -70,7 +77,6 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             if( a.estMature() ) nombreLionsMatures++;               
         }
         return nombreLionsMatures;
-
     }
 
     // number of current chaseable preys
@@ -124,7 +130,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public void chasser(){
         melanger();
         int nombreDeProiesChassees = 0;
-        for( Animal a : this.animaux ) {
+        for( Animal a : this.individus ) {
             //si c'est un predateur on fait manger le predateur
             if( a.estPredateur()){
                 //iterer a travers la list
@@ -132,13 +138,13 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 double doubleMassePredateur = a.getMasse() *2;
                 int i = 0 ;
                 
-                while((totalMasseAntilopeMangee<doubleMassePredateur) & (i <this.animaux.size()) & (nombreDeProiesChassees < getNombreProiesChassables())){
+                while((totalMasseAntilopeMangee<doubleMassePredateur) & (i <this.individus.size()) & (nombreDeProiesChassees < getNombreProiesChassables())){
                     //iterer a travers la list tant q on a pas atteint la masse de nourriture demandee
-                    if (animaux.get(i).estProie()){
-                        totalMasseAntilopeMangee += animaux.get(i).getMasse();
+                    if (individus.get(i).estProie()){
+                        totalMasseAntilopeMangee += individus.get(i).getMasse();
                         nombreDeProiesChassees++;
-                        animaux.remove(i);
-                        animaux.get(i).mourir();
+                        //individus.remove(i);
+                        individus.get(i).mourir();
                         i++;
                     }
                     i++;
@@ -146,7 +152,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 //si le lion n'a pas mangE la masse suffisante elle meurt
                 if (totalMasseAntilopeMangee<doubleMassePredateur){
                     a.mourir();
-                    animaux.remove(a);
+                    //individus.remove(a);
                 }
               
             }
@@ -154,19 +160,27 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             else{
                 // sinon on fait manger l'antilope
                 //une antilope doit manger 2 fois sa masse d’herbe 
-                double nouvelleMasseHerbe = herbe.getMasse() - (2 * a.getMasse()) ;
-                this.herbe.setMasse(nouvelleMasseHerbe);
+                
                 //ou manger
                 //A completer
                 // s'il ya pas assez d'herbe l'antilope meurt
-                //if(this.herbe.getMasse()<this.herbe.masseAnnuelle){
+                if(this.herbe.getMasse()<this.herbe.getMasse()){
+                    //this.masseAnnuelle = 0.6 * this.masse;
+                    double nouvelleMasseHerbe = herbe.getMasse() - (2 * a.getMasse()) ;
+                    this.herbe.setMasse(nouvelleMasseHerbe);
+                    a.mourir();
 
                 }
-                           
-        }
-      
-        
+                else{
+                   a.mourir();
+                }
 
+                }                          
+        }             
+
+    }
+    public ArrayList<Animal> getIndividus(){
+        return this.individus;
     }
 
     // reproducing
@@ -175,20 +189,22 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         int nombreDeFemmellesAntilope = getNombreProiesMatures()/2;
         int nombreDeFemmellesLionne = getNombrePredateursMatures()/2;
         for (int i =0; i<nombreDeFemmellesAntilope; i++){
-            this.proies.add(antilope.accoucher());
-            antilope.naitre();
-        }
-        for (int i =0; i<nombreDeFemmellesLionne; i++){
-            
-            this.predateurs.add(lion.accoucher());
-            lion.naitre();
-
-        }
+        this.individus.add(new Animal());// new antilope
+        
+   
     }
-    // mix the list of animals
-    public void melanger(){
-        Collections.shuffle(this.animaux, new Random(4));
+    for (int i =0; i<nombreDeFemmellesLionne; i++){
+    
+         this.individus.add(new Animal());//new Lion // accoucher
     }
         
-    
+    }
+
+
+    // mix the list of animals
+    public void melanger(){
+        Collections.shuffle(this.individus, new Random(4));
+    }   
 }
+
+
