@@ -15,22 +15,21 @@
 **/
 
 public class Lion extends Animal {
-    double facteurCroissanceLions;
+    public static final int AGEMAX = 50;
     Lion(double facteurCroissanceLions ){
         super();
-        this.facteurCroissanceLions = facteurCroissanceLions;
+        this.setFacteur(facteurCroissanceLions);
         setProie(false);
         setPredateur(true);
+
     }
-    Population population;
-    Antilope antilope;
-    Lion lion = new Lion(facteurCroissanceLions);
+    
+
 
     @Override
     public int getAgeMax() {
         return 50;
     }
-    public int AGEMAX = getAgeMax();
     
 
     @Override
@@ -39,17 +38,17 @@ public class Lion extends Animal {
     }
     @Override
     public Animal accoucher() {
-        lion.naitre();
-        return lion;
+        return new Lion(getFacteur());
 
     }
-
-    @Override
-    public void vieillir() {
-       int age = lion.getAge();
-        age++;
-        lion.setAge(age);
-        double masse = lion.getMasse() * this.facteurCroissanceLions;
-        lion.setMasse(masse);
-    }
+    /*
+    public void manger() {// Un Lion mange des antilopes equivalent a deux fois sa masse
+       // calcul du double de la masse du lion 
+        double doubleMassePredateur = lion.getMasse() *2;
+        //masse totale antilope - le double de la masse du lion = nouvelle masse des antilopes
+        double nouvelleMasseAntilopes = population.masseProies() - doubleMassePredateur ;
+        antilope.setMasse(nouvelleMasseAntilopes);
+    }*/
+    
 }
+
