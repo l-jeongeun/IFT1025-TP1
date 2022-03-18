@@ -151,7 +151,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             if( a.estPredateur()){
                 //iterer a travers la list
                 double totalMasseAntilopeMangee = 0;
-                double doubleMassePredateur = a.getMasse() *2;
+                double doubleMassePredateur = a.getMasse() * 2;
                 int i = 0 ;
                 
 
