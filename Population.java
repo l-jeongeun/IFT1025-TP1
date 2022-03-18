@@ -176,12 +176,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             } else{
                 // sinon on fait manger l'antilope
                 //une antilope doit manger 2 fois sa masse d’herbe 
-                
-                //ou manger
-                //A completer
                 // s'il ya pas assez d'herbe l'antilope meurt
                 if(this.herbe.getMasse()>=a.getMasse()){
-                    //this.masseAnnuelle = 0.6 * this.masse;
                     double nouvelleMasseHerbe = herbe.getMasse() - (2 * a.getMasse()) ;
                     this.herbe.setMasse(nouvelleMasseHerbe);
                 } else{
@@ -213,34 +209,21 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         
     // }
 
-    public void reproduire()
-    {
-	    ArrayList<Animal> proies = new ArrayList<>();
-	    ArrayList<Animal> predateurs = new ArrayList<>();
+    public void reproduire()  {
+        
+	    int femmelleProies = getNombreProiesMatures()/2;
+        int femmellePredateurs = getNombrePredateursMatures()/2;
 
-	    boolean femelleLionne = true;
-	    boolean femelleaAntilope = true;
-	    for(Animal animal : this.individus) {
-            if(animal.estVivant() && animal.estMature()) {
-                if(animal.estPredateur()) {
-                    if(femelleLionne) {
-                        Lion lion = (Lion)animal.accoucher();
-                         predateurs.add(lion);
-                     }
-                     femelleLionne = !femelleLionne;
-                } else if(animal.estProie()) {
-                    if(femelleaAntilope) {
-                        Antilope antilope = (Antilope)animal.accoucher();
-                        proies.add(antilope);
-                    }
-                    femelleaAntilope = !femelleaAntilope;
-                }
+        for(int i = 0; i<this.individus.size(); i++){
+            if(this.individus.get(i).estProie() & this.individus.get(i).estVivant()& femmelleProies>0 &this.individus.get(i).estMature()){
+                this.individus.add(this.individus.get(i).accoucher());
+                femmelleProies--;
             }
-        }
-
-        for(Animal animal : proies) this.individus.add(animal);
-        for(Animal animal : predateurs) this.individus.add(animal);
-
+            else if( this.individus.get(i).estPredateur() & this.individus.get(i).estVivant()& femmellePredateurs>0 &this.individus.get(i).estMature()){
+                this.individus.add(this.individus.get(i).accoucher());
+                femmellePredateurs--;
+            }
+        }    
     }
 
 
@@ -251,5 +234,4 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         Collections.shuffle(this.individus, new Random(4));
     }   
 }
-
 
