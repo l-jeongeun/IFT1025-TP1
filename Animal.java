@@ -18,33 +18,37 @@
     
 
 public class Animal implements ProiePredateur{
-    private double facteurCroissance ;
-    public Animal(){
-
-    }
-    
+    protected double facteurCroissance ;
     private int age;
+    protected int ageMax;
     // current mass
-    private double masse =10.0 ;
+    private double masse;
     //age auquel un animal devient mature
-    private int ageMature;
+    protected int ageMature;
     private boolean proie;
     private boolean predateur;
     private boolean vivant = true;
+
+    public Animal(double facteurCroissance){
+        this.facteurCroissance = facteurCroissance;
+        this.setMasse(10);
+        this.setAge(0);
+        this.naitre();
+    }
+    
     //Animal animale = new Animal();
 
     public void setFacteur(double facteur){
         this.facteurCroissance = facteur;
     }
+
     public double getFacteur(){
         return this.facteurCroissance;
     }
+
     // animal becomes alive
     public void naitre(){
-        
-        //animale.setAge(0);
-        //animale.estVivant();        
-             
+
     } 
     
 
@@ -57,15 +61,14 @@ public class Animal implements ProiePredateur{
 
      // animal delivers
     public Animal accoucher(){
-        
-        return new Animal(); 
-
+        return new Animal(this.facteurCroissance); 
     }
+
     // animal dies
     public void mourir(){
         this.vivant = false;
-
     }
+
     // animal is alive
     public boolean estVivant(){
         return this.vivant;
@@ -73,76 +76,67 @@ public class Animal implements ProiePredateur{
 
     // animal is mature   
     public boolean estMature(){
-        if (this.estVivant() & this.getAge() >= this.getAgeMature()){
-            return true;
-        }      
-        return false;
-        
+        return this.estVivant() && this.getAge() >= this.getAgeMature();
     }
+
      // set animal mode to prey
     public void setProie( boolean proie ){
         this.proie = proie;
-        
-        
     }
+
     // animal is a prey
     public boolean estProie(){
         // si l'animal a ete set une proie on retourne true
-       if(this.proie){
-           return true;
-       }
-        return false;
+       return this.proie;
     }
+
     // set animal mode to predator
     public void setPredateur( boolean predateur ){
         this.predateur = predateur;
-
     }
+
     // animal is a predator
     public boolean estPredateur(){
-        if(this.predateur){
-            return true;
-        }
-        return false;
-     
+        return this.predateur;    
     }
 
      // get animal's mass
     public double getMasse(){
          return this.masse; 
-        
     }
+
     // set animal's mass
     public void setMasse( double masse ){
         this.masse = masse;
     }
+
     // set animal's age
     public void setAge( int age ){
         this.age = age;
-
     }
+
     // get animal's age
     public int getAge(){
         return this.age;
-
     }
+
     // get animal's maximum age
     public int getAgeMax(){
-        return 0;
-        
+        return this.ageMax;
     }
+
     // get animal's mature age
     public int getAgeMature(){
         return this.ageMature;
-        
     }
+
     // animal is getting one year older
     public void vieillir() {
          this.age++;
          this.setMasse(this.getMasse() * getFacteur());
          
          if (this.getAge() > this.getAgeMax()){
-             this.vivant = false;
+             this.mourir();
          } 
      }
 }
