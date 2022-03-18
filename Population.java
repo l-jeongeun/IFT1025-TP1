@@ -151,7 +151,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             if( a.estPredateur()){
                 //iterer a travers la list
                 double totalMasseAntilopeMangee = 0;
-                double doubleMassePredateur = a.getMasse() * 2;
+                double doubleMassePredateur = a.getMasse() *2;
                 int i = 0 ;
                 
 
@@ -173,18 +173,20 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                     a.mourir();
                 }
               
-            } // sinon on fait manger l'antilope
-            else if (a.estProie()& a.estVivant()){
-      
-                //une antilope doit manger 2 fois sa masse d’herbe s'il ya pas assez d'herbe l'antilope meurt
-                if(this.herbe.getMasse() > 0){
-                    this.herbe.setMasse(herbe.getMasse() - (2 * a.getMasse()));
-                }
-                else{
+            } else{
+                // sinon on fait manger l'antilope
+                //une antilope doit manger 2 fois sa masse d’herbe 
+                
+                //ou manger
+                //A completer
+                // s'il ya pas assez d'herbe l'antilope meurt
+                if(this.herbe.getMasse()>=a.getMasse()){
+                    //this.masseAnnuelle = 0.6 * this.masse;
+                    double nouvelleMasseHerbe = herbe.getMasse() - (2 * a.getMasse()) ;
+                    this.herbe.setMasse(nouvelleMasseHerbe);
+                } else{
                    a.mourir();
                 }
-
-                
             }                          
         }             
 
@@ -249,3 +251,5 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         Collections.shuffle(this.individus, new Random(4));
     }   
 }
+
+
