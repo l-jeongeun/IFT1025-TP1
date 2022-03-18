@@ -209,21 +209,34 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         
     // }
 
-    public void reproduire()  {
-        
-	    int femmelleProies = getNombreProiesMatures()/2;
-        int femmellePredateurs = getNombrePredateursMatures()/2;
+    public void reproduire()
+    {
+	    ArrayList<Animal> proies = new ArrayList<>();
+	    ArrayList<Animal> predateurs = new ArrayList<>();
 
-        for(int i = 0; i<this.individus.size(); i++){
-            if(this.individus.get(i).estProie() & this.individus.get(i).estVivant()& femmelleProies>0 &this.individus.get(i).estMature()){
-                this.individus.add(this.individus.get(i).accoucher());
-                femmelleProies--;
+	    boolean femelleLionne = true;
+	    boolean femelleaAntilope = true;
+	    for(Animal animal : this.individus) {
+            if(animal.estVivant() && animal.estMature()) {
+                if(animal.estPredateur()) {
+                    if(femelleLionne) {
+                        Lion lion = (Lion)animal.accoucher();
+                         predateurs.add(lion);
+                     }
+                     femelleLionne = !femelleLionne;
+                } else if(animal.estProie()) {
+                    if(femelleaAntilope) {
+                        Antilope antilope = (Antilope)animal.accoucher();
+                        proies.add(antilope);
+                    }
+                    femelleaAntilope = !femelleaAntilope;
+                }
             }
-            else if( this.individus.get(i).estPredateur() & this.individus.get(i).estVivant()& femmellePredateurs>0 &this.individus.get(i).estMature()){
-                this.individus.add(this.individus.get(i).accoucher());
-                femmellePredateurs--;
-            }
-        }    
+        }
+
+        for(Animal animal : proies) this.individus.add(animal);
+        for(Animal animal : predateurs) this.individus.add(animal);
+
     }
 
 
