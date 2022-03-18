@@ -73,7 +73,7 @@ public class Animal implements ProiePredateur{
 
     // animal is mature   
     public boolean estMature(){
-        if (this.getAge() >= this.getAgeMature()){
+        if (this.estVivant() & this.getAge() >= this.getAgeMature()){
             return true;
         }      
         return false;
