@@ -6,7 +6,7 @@ public class TestPrincipal {
         
 
 
-        SavaneTest savane = new SavaneTest(8,1.0,500,1.0,101,20000,200000,3.0,true);
+        Savane savane = new Savane(8,1.0,500,1.0,101,20000,200000,3.0,true);
         
         double[] testing = savane.simule();
         if(testing[0]-1<1){
