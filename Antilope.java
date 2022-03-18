@@ -15,31 +15,25 @@
 **/
 
 public class Antilope extends Animal {
-    Herbe herbe;
-    Savane savane;
     public static final int AGEMAX = 15;
+
     Antilope(double facteurCroissanceAntilopes ){
-        super();
-        this.setFacteur(facteurCroissanceAntilopes);
-        setProie(true);
-        setPredateur(false);       
+        super(facteurCroissanceAntilopes);
     }
 
     
-    @Override
-    public int getAgeMax() {
-        return 15;
-    }
-    @Override
-    public int getAgeMature() {
-        return 2;
-    }
+    // animal becomes alive
+    public void naitre(){
+        this.ageMax = Antilope.AGEMAX;
+        this.ageMature = 2;
+        this.setProie(true);
+        this.setPredateur(false);
+    }    
     
-    @Override
-    public Animal accoucher() {
-        
-        return new Antilope(getFacteur());
+    public Animal accoucher(){
+        return new Antilope(this.facteurCroissance); 
     }
+
     /*
     @Override
     public void manger() {
