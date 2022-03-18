@@ -19,29 +19,28 @@ import java.lang.Iterable;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Random;
-import java.lang.Math;
 
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
     private ArrayList<Animal> individus = new ArrayList<>(); // concatener proies et predateurs
-    int nombreAntilopesMatures = 0;
-    int nombreLionsMatures = 0 ;
-    Herbe herbe;
-    
-
-    
    
+    int nombreAntilopesMatures;
+    int nombreLionsMatures  ;
+    Herbe herbe;
+    //ArrayList<Animal> maturesProies = new ArrayList<>();
+   // ArrayList<Animal> maturesPredateurs = new ArrayList<>(); 
 
     public Population( Herbe herbe, ArrayList<Animal> proies, ArrayList<Animal> predateurs ) {
-        // A completer
-        this.herbe = herbe;
+	
+    this.herbe = herbe;
 
-        for(int i = 0; i<(proies.size()); i++){
-            this.individus.add(proies.get(i));
-        }
-        for(int i = 0; i<(predateurs.size()); i++){
-            this.individus.add(predateurs.get(i));
-        }
+    for(int i = 0; i<(proies.size()); i++){
+        this.individus.add(proies.get(i));
+    }
+    for(int i = 0; i<(predateurs.size()); i++){
+        this.individus.add(predateurs.get(i));
+    }
+    
     }
     
     public Iterator<Animal> iterator(){
@@ -49,66 +48,73 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
     
     // number of current preys
-    public int getNombreProies()
-    {
-        int count = 0;
-        for(Animal a : this.individus) {
-            if(a.estProie() && a.estVivant())    count++;
+    public int getNombreProies(){
+        int nombreDeProies = 0;
+        for( Animal a : this.individus ) {
+            if(a.estProie() & a.estVivant()){
+                nombreDeProies++;
+            }
         }
-        return count;
+
+        return nombreDeProies;
     }
 
     // number of current predators
-    public int getNombrePredateurs()    
-    {
-        int count = 0;
-        for(Animal a : this.individus) {
-            if(a.estPredateur() && a.estVivant())    count++;
+    public int getNombrePredateurs(){
+        int nombreDePredateurs = 0;
+        for( Animal a : this.individus ) {
+            if(a.estPredateur() & a.estVivant()){
+                nombreDePredateurs++;
+            }
         }
-        return count;
+
+        return nombreDePredateurs;
     }
 
     // number of current mature preys
     public int getNombreProiesMatures(){
+        nombreAntilopesMatures = 0;
         for( Animal a : this.individus ) {
-            if( a.estProie() && a.estVivant() && a.estMature() ) nombreAntilopesMatures++;               
+            if( a.estMature() & a.estVivant() & a.estProie()) {
+                nombreAntilopesMatures++; 
+                //on ajoute les proies a l'arraylist maturesProies
+                
+            }              
         }
+        //System.out.println(this.nombreAntilopesMatures+"Antilope mature");
         return nombreAntilopesMatures;
     }
 
     // number of current mature predators
     public int getNombrePredateursMatures(){
-        for( Animal a : this.individus ) {
-            if( a.estPredateur() && a.estVivant() && a.estMature() ) nombreLionsMatures++;               
+        nombreLionsMatures = 0;
+        for( Animal a : this.individus) {
+            if( a.estMature()  & a.estVivant() & a.estPredateur()) {
+                nombreLionsMatures++;
+                
+                //this.maturesPredateurs.add(a);
+            }               
         }
         return nombreLionsMatures;
     }
 
     // number of current chaseable preys
-    public int getNombreProiesChassables()
-    {
-        //seulement 20% des antilopes vivantes sont chassable
-        int  nombreProiesVivante = 0;
-        for( Animal a : this.individus ) {
-            if( a.estProie() && a.estVivant() ) nombreProiesVivante++;               
-        }
-
-        int nombreProiesChassable = (int)Math.floor(nombreProiesVivante*0.2);
-           
-        return nombreProiesChassable;
+    public int getNombreProiesChassables(){
+        //seulement 20% des antilopes vivantes sont chassables  
+        int nombreProiesChassable = (getNombreProies()*20)/100;//********************************
+           return nombreProiesChassable;
     }
-
+    
     // current total mass of preys
     public double masseProies(){
         double masseTotale = 0;
         //get the mass of every prey
-        for( Animal a : this.individus ) {
-            if(!a.estProie() || !a.estVivant()) continue;
-
-            double masse = a.getMasse();
+        for( Animal a : individus ) {
+            if(a.estProie()){   
+           double masse = a.getMasse();
             masseTotale += masse;
         }
-
+        }
         return masseTotale;
     }
 
@@ -116,13 +122,12 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public double massePredateurs(){
         double masseTotale = 0;
         //get the mass of every predator
-        for( Animal a : this.individus ) {
-            if(!a.estPredateur() || !a.estVivant()) continue;
-
-            double masse = a.getMasse();
+        for( Animal a : individus ) {
+            if(a.estPredateur()){   
+           double masse = a.getMasse();
             masseTotale += masse;
+            }
         }
-
         return masseTotale;
     }
 
@@ -133,12 +138,15 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         //les animaux vieillissent en ajoutant un an a leur age et s'ils ont atteint l'age max, ils meurt
         for( Animal a : this.individus ) {
             a.vieillir();
+            //si l'animal atteint l'age max il meurt
+            if (a.getAge() > a.getAgeMax()){
+                a.mourir();
+            }               
         }
     }
 
     // chasing
-    public void chasser()
-    {
+    public void chasser(){
         melanger();
         int nombreDeProiesChassees = 0;
         int chassable = this.getNombreProiesChassables();
@@ -173,45 +181,27 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                     a.mourir();
                 }
               
-            } else{
-                // sinon on fait manger l'antilope
-                //une antilope doit manger 2 fois sa masse d’herbe 
-                // s'il ya pas assez d'herbe l'antilope meurt
-                if(this.herbe.getMasse()>=a.getMasse()){
-                    double nouvelleMasseHerbe = herbe.getMasse() - (2 * a.getMasse()) ;
-                    this.herbe.setMasse(nouvelleMasseHerbe);
-                } else{
+            }
+            // sinon on fait manger l'antilope
+            else if (a.estProie()& a.estVivant()){
+      
+                //une antilope doit manger 2 fois sa masse d’herbe s'il ya pas assez d'herbe l'antilope meurt
+                if(this.herbe.getMasse() > 0){
+                    this.herbe.setMasse(herbe.getMasse() - (2 * a.getMasse()));
+                }
+                else{
                    a.mourir();
                 }
-            }                          
+
+                }                          
         }             
 
     }
-    public ArrayList<Animal> getIndividus(){
-        return this.individus;
-    }
-
-    // reproducing
-
-    // public void reproduire(){
-    //     // la moitie du nombre d'animaux matures sont femmelles et peuvent reproduire
-    //     int nombreDeFemmellesAntilope = getNombreProiesMatures()/2;
-    //     int nombreDeFemmellesLionne = getNombrePredateursMatures()/2;
-    //     for (int i =0; i<nombreDeFemmellesAntilope; i++){
-    //     this.individus.add(new Animal());// new antilope
-        
-   
-    // }
-    // for (int i =0; i<nombreDeFemmellesLionne; i++){
     
-    //      this.individus.add(new Animal());//new Lion // accoucher
-    // }
-        
-    // }
-
-    public void reproduire()  {
-        
-	    int femmelleProies = getNombreProiesMatures()/2;
+    // reproducing
+    public void reproduire(){
+        // la moitie du nombre d'animaux matures sont femmelles et peuvent reproduire
+        int femmelleProies = getNombreProiesMatures()/2;
         int femmellePredateurs = getNombrePredateursMatures()/2;
 
         for(int i = 0; i<this.individus.size(); i++){
@@ -224,14 +214,19 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 femmellePredateurs--;
             }
         }    
+
+        //System.out.println(getNombrePredateurs()+"predateurs");
+        
+
+        
     }
-
-
-
 
     // mix the list of animals
     public void melanger(){
         Collections.shuffle(this.individus, new Random(4));
     }   
+    public ArrayList<Animal> getIndividus(){
+        
+        return this.individus;
+    }
 }
-
