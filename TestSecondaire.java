@@ -9,6 +9,7 @@ public class TestSecondaire {
         }
         totalTest++;
         */
+
         System.out.println("////////////////////////////////////////////////////////////////////////////////////////////////////");
         System.out.println("Fichier Animal/Lion/Antilope sauf manger() et accoucher(). Il n'y aura pas de test caché pour cette partie. \n");
 
@@ -151,6 +152,7 @@ public class TestSecondaire {
     totalTest++;
     //chasser    
 
+    /*
     testV = new Savane(8,1.1,500,1.1,1,20000,200000,3.0,true);  
     pop = testV.getSavane();
     pop.chasser();
@@ -159,6 +161,7 @@ public class TestSecondaire {
         nT++;
     }
     totalTest++;
+    */
 
     testV = new Savane(80,1.1,500,1.1,1,20000,200000,3.0,true);  
     pop = testV.getSavane();
