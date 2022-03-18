@@ -130,6 +130,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public void chasser(){
         melanger();
         int nombreDeProiesChassees = 0;
+
         for( Animal a : this.individus ) {
             //si c'est un predateur on fait manger le predateur
             if( a.estPredateur()){
@@ -184,21 +185,54 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     // reproducing
-    public void reproduire(){
-        // la moitie du nombre d'animaux matures sont femmelles et peuvent reproduire
-        int nombreDeFemmellesAntilope = getNombreProiesMatures()/2;
-        int nombreDeFemmellesLionne = getNombrePredateursMatures()/2;
-        for (int i =0; i<nombreDeFemmellesAntilope; i++){
-        this.individus.add(new Animal());// new antilope
+
+    // public void reproduire(){
+    //     // la moitie du nombre d'animaux matures sont femmelles et peuvent reproduire
+    //     int nombreDeFemmellesAntilope = getNombreProiesMatures()/2;
+    //     int nombreDeFemmellesLionne = getNombrePredateursMatures()/2;
+    //     for (int i =0; i<nombreDeFemmellesAntilope; i++){
+    //     this.individus.add(new Animal());// new antilope
         
    
-    }
-    for (int i =0; i<nombreDeFemmellesLionne; i++){
+    // }
+    // for (int i =0; i<nombreDeFemmellesLionne; i++){
     
-         this.individus.add(new Animal());//new Lion // accoucher
-    }
+    //      this.individus.add(new Animal());//new Lion // accoucher
+    // }
         
+    // }
+
+    public void reproduire()
+    {
+	    ArrayList<Animal> proies = new ArrayList<>();
+	    ArrayList<Animal> predateurs = new ArrayList<>();
+
+	    boolean femelleLionne = true;
+	    boolean femelleaAntilope = true;
+	    for(Animal animal : this.individus) {
+            if(animal.estVivant() && animal.estMature()) {
+                if(animal.estPredateur()) {
+                    if(femelleLionne) {
+                        Lion lion = (Lion)animal.accoucher();
+                         predateurs.add(lion);
+                     }
+                     femelleLionne = !femelleLionne;
+                } else if(animal.estProie()) {
+                    if(femelleaAntilope) {
+                        Antilope antilope = (Antilope)animal.accoucher();
+                        proies.add(antilope);
+                    }
+                    femelleaAntilope = !femelleaAntilope;
+                }
+            }
+        }
+
+        for(Animal animal : proies) this.individus.add(animal);
+        for(Animal animal : predateurs) this.individus.add(animal);
+
     }
+
+
 
 
     // mix the list of animals
