@@ -91,43 +91,42 @@ public class SavaneTest implements TP1Stats {
 	
     public double[] simule() {
 	// the order of event is important
-	int annee=0;
+		int annee=0;
 
-	try {
-		File myObj = new File("savaneTest1.txt");
-		Scanner myReader = new Scanner(myObj);
+		try {
+			File myObj = new File("savaneTest1.txt");
+			Scanner myReader = new Scanner(myObj);
+			
 		
-	
-	
-	 
-	herbe.vieillir(); // herb grows first year without any animal
-	savane.vieillir(); savane.vieillir(); // animal babies grow protected for the first two years
+		
+		
+			herbe.vieillir(); // herb grows first year without any animal
+			savane.vieillir(); savane.vieillir(); // animal babies grow protected for the first two years
 
-	// cycles start
+			// cycles start
+		
+			for( annee = 0; annee < nombreAnnees; annee++ ) {
+				savane.vieillir();   // ----- LA SAVANE VIEILLIT -----
+				savane.chasser();    // ----- LA SAVANE CHASSE -----
+				savane.reproduire(); // ----- LA SAVANE PROCRÉE -----
+				// debugging-output
+				if( show && ( annee + 1 ) < this.nombreAnnees ) {
+					if(lecture(myReader,stats( annee, show ))){
+						double[]answer = {annee*1.0};
+						return answer;
+					}
+				};
+			}
 	
-        for( annee = 0; annee < nombreAnnees; annee++ ) {
-	    savane.vieillir();   // ----- LA SAVANE VIEILLIT -----
-	    savane.chasser();    // ----- LA SAVANE CHASSE -----
-	    savane.reproduire(); // ----- LA SAVANE PROCRÉE -----
-	    // debugging-output
-            if( show && ( annee + 1 ) < this.nombreAnnees ) {
-				if(lecture(myReader,stats( annee, show ))){
-					double[]answer = {annee*1.0};
-					return answer;
-				}
-			};
-        }
-	
-	myReader.close();
-	} catch (FileNotFoundException e) {
-	System.out.println("An error occurred.");
-	e.printStackTrace();
-  	}
-	
-  	
-	  
-	return stats( annee, true ); // return the stats of the last year and print
-
+			myReader.close();
+		} 
+		
+		catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+		
+		return stats( annee, true ); // return the stats of the last year and print
 
     }
 
