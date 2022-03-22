@@ -86,19 +86,21 @@ public class Savane implements TP1Stats {
     public double[] simule() {
 	// the order of event is important
 	
-	savane.vieillir(); savane.vieillir(); // the savane grows protected for the first two years
+		savane.vieillir(); savane.vieillir(); // the savane grows protected for the first two years
 
 	// cycles start
-	int annee;
-        for( annee = 0; annee < nombreAnnees; annee++ ) {
-	    savane.vieillir();   // ----- LA SAVANE VIEILLIT -----
-	    savane.chasser();    // ----- LA SAVANE CHASSE -----
-	    savane.reproduire(); // ----- LA SAVANE PROCRÉE -----
-	    // debugging-output
-            if( show && ( annee + 1 ) < this.nombreAnnees ) stats( annee + 1, show );
-        }
-	return stats( annee, true ); // return the stats of the last year and print
+		int annee;
+			for( annee = 0; annee < nombreAnnees; annee++ ) {
+				savane.vieillir();   // ----- LA SAVANE VIEILLIT -----
+				savane.chasser();    // ----- LA SAVANE CHASSE -----
+				savane.reproduire(); // ----- LA SAVANE PROCRÉE -----
+			// debugging-output
+				if( show && ( annee + 1 ) < this.nombreAnnees ) stats( annee + 1, show );
+			}
+			
+			return stats( annee, true ); // return the stats of the last year and print
     }
+	
 	public Population getSavane(){
 		return this.savane;
 	}
