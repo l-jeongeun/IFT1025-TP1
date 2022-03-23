@@ -87,7 +87,7 @@ public class Animal implements ProiePredateur{
     // animal is a prey
     public boolean estProie(){
         // si l'animal a ete set une proie on retourne true
-       return this.proie;
+       return this.proie && this.estVivant();
     }
 
     // set animal mode to predator
@@ -97,7 +97,7 @@ public class Animal implements ProiePredateur{
 
     // animal is a predator
     public boolean estPredateur(){
-        return this.predateur;    
+        return this.predateur && this.estVivant();    
     }
 
      // get animal's mass
