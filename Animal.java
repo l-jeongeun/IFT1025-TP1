@@ -76,7 +76,7 @@ public class Animal implements ProiePredateur{
 
     // animal is mature   
     public boolean estMature(){
-        return this.estVivant() && this.getAge() >= this.getAgeMature();
+        return this.estVivant() && this.age >= this.getAgeMature();
     }
 
      // set animal mode to prey
@@ -86,8 +86,7 @@ public class Animal implements ProiePredateur{
 
     // animal is a prey
     public boolean estProie(){
-        // si l'animal a ete set une proie on retourne true
-       return this.proie && this.estVivant();
+       return this.proie;
     }
 
     // set animal mode to predator
@@ -97,7 +96,7 @@ public class Animal implements ProiePredateur{
 
     // animal is a predator
     public boolean estPredateur(){
-        return this.predateur && this.estVivant();    
+        return this.predateur;    
     }
 
      // get animal's mass
@@ -135,7 +134,7 @@ public class Animal implements ProiePredateur{
          this.age++;
          this.setMasse(this.getMasse() * getFacteur());
          
-         if (this.getAge() > this.getAgeMax()){
+         if (this.age > this.getAgeMax()){
              this.mourir();
          } 
      }
