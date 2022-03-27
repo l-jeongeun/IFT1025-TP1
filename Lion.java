@@ -32,7 +32,7 @@ public class Lion extends Animal {
 
     @Override
     public int getAgeMax() {
-        return 50;
+        return AGEMAX;
     }
     
     @Override
