@@ -100,7 +100,7 @@ public class Savane implements TP1Stats {
 			
 			return stats( annee, true ); // return the stats of the last year and print
     }
-	
+
 	public Population getSavane(){
 		return this.savane;
 	}
@@ -146,16 +146,16 @@ public class Savane implements TP1Stats {
 	if( annee == 1 ) indice = "ière";
 	
         if( show ) {
-	    print( "///////////////////////////// À la fin de la " + annee + indice + " année, nous observons :" );
+	    	print( "///////////////////////////// À la fin de la " + annee + indice + " année, nous observons :" );
             print( nombreLions + " lions total ;" );
             print( nombreVieuxLions + " lions qui vont mourrir de vieillesse ;" );
-	    print( nombreLionsMatures + " lions matures ;" );
+	    	print( nombreLionsMatures + " lions matures ;" );
             print( nombreJeunesLions + " lions juvenils ;" );
             print( nombreBebesLions + " bébés lions ;" );
             print( masseTotaleLions + " masse en lions ;" );
-	    print( nombreAntilopes + " antilopes total ;" );
+	   		print( nombreAntilopes + " antilopes total ;" );
             print( nombreVieillesAntilopes + " antilopes qui vont mourrir de vieillesse ;" );
-	    print( nombreAntilopesMatures + " antilopes matures ;" );
+	    	print( nombreAntilopesMatures + " antilopes matures ;" );
             print( nombreJeunesAntilopes + " antilopes juveniles ;" );
             print( nombreBebesAntilopes + " bébés antilopes ; et" );
             print( masseTotaleAntilopes + " masse en antilopes." );
