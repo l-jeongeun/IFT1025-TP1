@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 // Fichier :     Lion.java
 // Création:     
 // Auteurs :
@@ -16,31 +18,33 @@
 
 public class Lion extends Animal {
     public static final int AGEMAX = 50;
-
+    private ArrayList<Animal> nourriture = new ArrayList<>(); 
+    Population pop ;
     Lion(double facteurCroissanceLions ){
-        super(facteurCroissanceLions);
-    }
+        super();
+        this.setFacteur(facteurCroissanceLions);
+        setProie(false);
+        setPredateur(true);
+        setAge(0);
 
-    // animal becomes alive
-    public void naitre(){
-        this.ageMax = Lion.AGEMAX;
-        this.ageMature = 5;
-        this.setProie(false);
-        this.setPredateur(true);
-    } 
-        
-    public Animal accoucher(){
-        return new Lion(this.facteurCroissance); 
     }
+    
 
-    /*
-    public void manger() {// Un Lion mange des antilopes equivalent a deux fois sa masse
-       // calcul du double de la masse du lion 
-        double doubleMassePredateur = lion.getMasse() *2;
-        //masse totale antilope - le double de la masse du lion = nouvelle masse des antilopes
-        double nouvelleMasseAntilopes = population.masseProies() - doubleMassePredateur ;
-        antilope.setMasse(nouvelleMasseAntilopes);
-    }*/
+
+    @Override
+    public int getAgeMax() {
+        return 50;
+    }
+    
+    @Override
+    public int getAgeMature() {
+        return 5;
+    }
+    @Override
+    public Animal accoucher() {
+        return new Lion(getFacteur());
+
+    }
+    
     
 }
-
