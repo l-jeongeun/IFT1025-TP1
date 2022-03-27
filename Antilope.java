@@ -29,7 +29,7 @@ public class Antilope extends Animal {
     
     @Override
     public int getAgeMax() {
-        return 15;
+        return AGEMAX;
     }
     @Override
     public int getAgeMature() {
