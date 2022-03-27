@@ -17,7 +17,6 @@
 **/
 
 public interface ProiePredateur {
-    public void naitre(); // animal becomes alive
     public void vieillir(); // animal is getting one year older
     public void manger(); // animal eats
     public Animal accoucher(); // animal delivers
