@@ -109,10 +109,11 @@ public class SavaneTest implements TP1Stats {
 				savane.vieillir();   // ----- LA SAVANE VIEILLIT -----
 				savane.chasser();    // ----- LA SAVANE CHASSE -----
 				savane.reproduire(); // ----- LA SAVANE PROCRÉE -----
+				// stats(annee, true);
 				// debugging-output
 				if( show && ( annee + 1 ) < this.nombreAnnees ) {
 					if(lecture(myReader,stats( annee, show ))){
-						double[]answer = {annee*1.0};
+						double[]answer = {annee * 1.0};
 						return answer;
 					}
 				};
@@ -146,6 +147,7 @@ public class SavaneTest implements TP1Stats {
 			}
 			return bad;
 	}
+
     public double[] stats( int annee, boolean show ) {
 	show=false;
 	// to satisfy the TP1Stats interface
@@ -176,7 +178,9 @@ public class SavaneTest implements TP1Stats {
 		masseTotaleAntilopes += a.getMasse();
 		if( a.getAge() == Antilope.AGEMAX ) nombreVieillesAntilopes++;
 		if( a.estMature() ) nombreAntilopesMatures++;
-		if( !a.estMature() && a.getAge() != 0 ) nombreJeunesAntilopes++;
+		if( !a.estMature() && a.getAge() != 0 ) {
+			nombreJeunesAntilopes++;
+		}
 		if( a.getAge() == 0 ) nombreBebesAntilopes++;
 	    }
 	}
@@ -185,16 +189,16 @@ public class SavaneTest implements TP1Stats {
 	if( annee == 1 ) indice = "ière";
 	
         if( show ) {
-	    print( "///////////////////////////// À la fin de la " + annee + indice + " année, nous observons :" );
+			print( "///////////////////////////// À la fin de la " + annee + indice + " année, nous observons :" );
             print( nombreLions + " lions total ;" );
             print( nombreVieuxLions + " lions qui vont mourrir de vieillesse ;" );
-	    print( nombreLionsMatures + " lions matures ;" );
+	    	print( nombreLionsMatures + " lions matures ;" );
             print( nombreJeunesLions + " lions juvenils ;" );
             print( nombreBebesLions + " bébés lions ;" );
             print( masseTotaleLions + " masse en lions ;" );
-	    print( nombreAntilopes + " antilopes total ;" );
+	    	print( nombreAntilopes + " antilopes total ;" );
             print( nombreVieillesAntilopes + " antilopes qui vont mourrir de vieillesse ;" );
-	    print( nombreAntilopesMatures + " antilopes matures ;" );
+	    	print( nombreAntilopesMatures + " antilopes matures ;" );
             print( nombreJeunesAntilopes + " antilopes juveniles ;" );
             print( nombreBebesAntilopes + " bébés antilopes ; et" );
             print( masseTotaleAntilopes + " masse en antilopes." );
