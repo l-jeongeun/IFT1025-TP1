@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class Lion extends Animal {
     public static final int AGEMAX = 50;
     private ArrayList<Animal> nourriture = new ArrayList<>(); 
-    Population pop ;
     Lion(double facteurCroissanceLions ){
         super();
         this.setFacteur(facteurCroissanceLions);
