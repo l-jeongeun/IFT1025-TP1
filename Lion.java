@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 // Fichier :     Lion.java
 // Création:     
