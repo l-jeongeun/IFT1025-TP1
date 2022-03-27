@@ -34,7 +34,6 @@ public class Animal implements ProiePredateur{
     private boolean proie;
     private boolean predateur;
     private boolean vivant = true;
-    private boolean mort = true;
 
     //Animal animale = new Animal();
 
@@ -46,10 +45,6 @@ public class Animal implements ProiePredateur{
         return this.facteurCroissance;
     }
 
-    //set antelope food
-    public void setNourriture(Herbe herbe) {
-        herbe.setMasseAnnuelle(herbe.getMasseAnnuelle() - (2 * getMasse()));
-    }
 
     // animal eats
     public void manger(){
@@ -58,10 +53,10 @@ public class Animal implements ProiePredateur{
 
     // antelope eats
     public void manger(Herbe herbe){
-       setNourriture(herbe);
+       herbe.setMasseAnnuelle(herbe.getMasseAnnuelle() - (2 * getMasse()));
     }
 
-    // animal eats
+    // Lion eats
     public void manger(ArrayList<Animal> animal ){
        
     }
